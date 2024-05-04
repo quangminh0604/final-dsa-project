@@ -1,0 +1,7 @@
+- Fundamental applications: 
+  + Insert a string into a set 
+  + Erase a string from a set 
+  + Check whether a string be existence in a set 
+- Advanced form: 
+  + Persistent Trie: a another state of Trie allows to build different query when time is concerned 
+  + Aho corasick: a another form of Trie which combine with KMP technique
