@@ -1,0 +1,2 @@
+combine trie and kmp 
+example: find longest subsequence of string existing in set, if not exist, print "no existence!!" 

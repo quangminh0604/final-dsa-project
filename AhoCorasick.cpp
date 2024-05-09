@@ -38,14 +38,17 @@ const int dx[] = {1, 0, -1, 0, 1, -1, 1, -1};
 const int dy[] = {0, 1, 0, -1, 1, -1, -1, 1};
  
 //mt19937 rd(time(0));
-#define ALPHABET 26
+#define ALPHABET 26 // number of alphabet
 struct Node {
     int next[ALPHABET];
-    int fail;
-    int len;
+    int fail; // kmp at this node
+    int len; // depth level
+    bool end_of_word;
     Node() {
-        REP(i, ALPHABET) next[i] = -1;
-        fail = len = 0;
+        REP(i, ALPHABET) next[i] = -1; // point to null
+        fail = 0; // all kmp = 0
+        len = 0; // still dont have level yet
+        end_of_word = false;
     }
 };
  
@@ -54,54 +57,62 @@ struct Node {
 int n;
 vector<Node> trie;
 
-// add st to the set
+// add st to the set like normal
 void add(string st) {
     int u = 0;
     for (auto c : st) {
-        int x = c - 'A'; // convert char to int
-        if (trie[u].next[x] == -1) {
+        int x = c - 'a'; // convert char to int
+        if (trie[u].next[x] == -1) { 
             trie[u].next[x] = sz(trie);
             trie.push_back(Node());
         }
-        trie[trie[u].next[x]].len = trie[u].len + 1;
+        trie[trie[u].next[x]].len = trie[u].len + 1; // calculate the level of next node
         u = trie[u].next[x];
     }
+    trie[u].end_of_word = true;
 }
 
 // AhoCorasick requires to BFS
 void AC_BFS() {
     queue<int> q;
-    REP(c, ALPHABET) {
-        if (trie[0].next[c] == -1) {
-            trie[0].next[c] = 0;
+    REP(c, ALPHABET) { // add first level 
+        if (trie[0].next[c] == -1) { // if c does not exist in first level
+            trie[0].next[c] = 0; // we just give it the direction to root
         } else {
-            q.push(trie[0].next[c]);
+            q.push(trie[0].next[c]); // push into queue
         }
     }
+
+    // next: if next[c] does not exist in tree, we point to the deepest kmp node 
+    // at that time, trie[u].next[c] is equal to trie[trie[u].next[c]].fail, if trie[u].next[c] was existed
     while (!q.empty()) {
         int u = q.front(); q.pop();
-        int f = trie[u].fail;
+        int f = trie[u].fail; // deepest kmp node of u
         REP(c, ALPHABET) {
-            if (trie[u].next[c] == -1) {
-                trie[u].next[c] = trie[f].next[c];
-            } else {
-                trie[trie[u].next[c]].fail = trie[f].next[c];
-                q.push(trie[u].next[c]);
+            if (trie[u].next[c] == -1) { // if c does not exist in next level
+                trie[u].next[c] = trie[f].next[c]; // assign location to kmp node
+            } else { // if c does exist in next level
+                trie[trie[u].next[c]].fail = trie[f].next[c]; // assign the fail value of that node
+                q.push(trie[u].next[c]); // add to queue to repeat process 
             }
         }
     }
 }
 
-// find longest string in set is existence in the string st, if not exist, cout << -1
-int query(string st) {
-    int res = -1;
+// find longest subsequence of st existing in set st, if not exist, print "no existence!!"
+string query(string st) {
+    string res;
     int u = 0;
-    for (auto c : st) {
-        int x = c - 'A'; //  convert char to int
+    ii ans = mp(0, -1);
+    REP(i, sz(st)) {
+        int x = st[i] - 'a'; //  convert char to int
         u = trie[u].next[x];
-        maximize(res, trie[u].len);
+        if (trie[u].end_of_word && trie[u].len > ans.se - ans.fi + 1) 
+            ans = mp(i - trie[u].len + 1, i); 
     }
-    return res == 0 ? -1 : res;
+    if (ans == mp(0, -1)) res = "no existence!!";
+    else FOR(i, ans.fi, ans.se) res.push_back(st[i]);
+    return res;
 }
 
 void solve() {
@@ -111,6 +122,7 @@ void solve() {
         string st; cin >> st;
         add(st);
     }
+    cout << sz(trie) << "\n";
     AC_BFS();
     int numQ; cin >> numQ;
     FOR(i, 1, numQ) {
@@ -123,8 +135,8 @@ int main() {
         ios_base::sync_with_stdio(false);
         cin.tie(0);
         #ifndef ONLINE_JUDGE
-        freopen("test.inp", "r", stdin);
-        freopen("test.out", "w", stdout);
+        freopen("AhoCorasick.inp", "r", stdin);
+        freopen("AhoCorasick.out", "w", stdout);
         #else
         //
         #endif // ONLINE_JUDGE*/
