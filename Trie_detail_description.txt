@@ -1,0 +1,4 @@
+    - For this program, you can find a name in a given list, and build a small search engine for your own
+    - For example: 
+        Find the student who is your relative in 2000 uit's students
+    - I wrote this program specifically for find a student in my class, you can check 

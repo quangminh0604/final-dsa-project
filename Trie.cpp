@@ -122,8 +122,8 @@ int main() {
         ios_base::sync_with_stdio(false);
         cin.tie(0);
         #ifndef ONLINE_JUDGE
-        freopen("test.inp", "r", stdin);
-        freopen("test.out", "w", stdout);
+        freopen("Trie.inp", "r", stdin);
+        freopen("Trie.out", "w", stdout);
         #else
         //
         #endif // ONLINE_JUDGE*/
