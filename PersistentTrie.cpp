@@ -39,13 +39,13 @@ const int dy[] = {0, 1, 0, -1, 1, -1, -1, 1};
  
 //mt19937 rd(time(0));
  
-#define ALPHABET 26
+#define ALPHABET 26 // number of alphabet
 struct Node {
     int next[ALPHABET];
-    bool end_of_word;
+    bool end_of_word; // check if the node is end of any word
     Node() {
-        REP(i, ALPHABET) next[i] = -1;
-        end_of_word = false;
+        REP(i, ALPHABET) next[i] = -1; // at first, every node points to null
+        end_of_word = false; // no word ends on this node
     }
 };
 
@@ -56,38 +56,41 @@ vector<Node> trie;
 
 void add(int newID, int oldID, string st) {
     for (auto c : st) {
-        REP(i, ALPHABET) if (i == c - 'A') {
+        REP(i, ALPHABET) if (i == c - 'a') { // add letter c into tree
             trie[newID].next[i] = sz(trie);
             trie.push_back(Node());
 
             if (oldID != -1) oldID = trie[oldID].next[i];
-        } else if (oldID != -1) trie[newID].next[i] = trie[oldID].next[i];
-        newID = trie[newID].next[c - 'A'];
+        } else if (oldID != -1) trie[newID].next[i] = trie[oldID].next[i]; // link to previous tree if not letter c
+        newID = trie[newID].next[c - 'a'];
     }
-    trie[newID].end_of_word = true;
+    trie[newID].end_of_word = true; // confirm this node is the end of a word
 }
 
-bool check(int moment, string st) {
+bool check(int moment, string st) { // check if st exists before or in "moment"
     for (auto c : st) {
-        int x = c - 'A'; // convert char to int
-        if (trie[moment].next[x] == -1) return false;
-        moment = trie[moment].next[x];
+        int x = c - 'a'; // convert char to int
+        if (trie[moment].next[x] == -1) return false; // if can not go to next node, return false
+        moment = trie[moment].next[x]; // go to next node
     }
-    return trie[moment].end_of_word;
+   
+    return trie[moment].end_of_word; // return true if this is really a existed word
 }
 
 void solve() {
     cin >> n;
-    FOR(i, 0, n) trie.push_back(Node());
+    FOR(i, 0, n) trie.push_back(Node()); // add intial node for whole n+1 tree
     FOR(i, 1, n) {
         string st; cin >> st;
-        add(i, i - 1, st);
+        add(i, i - 1, st); 
     }
+    // cout << sz(trie) << "\n";
     int numQ; cin >> numQ;
     FOR(i, 1, numQ) {
         int t; string st; 
-        cin >> t >> st;
-        if (check(t, st)) cout << "existence!\n"; else cout << "not exist!";
+        cin >> st >> t;
+        if (check(t, st)) cout << st << " is added!\n"; 
+            else cout << st << " does not exist!\n";
     }
 }
  
@@ -95,8 +98,8 @@ int main() {
         ios_base::sync_with_stdio(false);
         cin.tie(0);
         #ifndef ONLINE_JUDGE
-        freopen("test.inp", "r", stdin);
-        freopen("test.out", "w", stdout);
+        freopen("PersistentTrie.inp", "r", stdin);
+        freopen("PersistentTrie.out", "w", stdout);
         #else
         //
         #endif // ONLINE_JUDGE*/

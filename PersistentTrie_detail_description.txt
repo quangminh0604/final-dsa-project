@@ -1,0 +1,2 @@
+you can manage all the given strings by the given time
+and find exactly strings from a event backward
