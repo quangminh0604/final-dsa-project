@@ -1,6 +1,6 @@
 ---
 triple:          'arm64-apple-darwin'
-binary-path:     '/Applications/GitHub/final-dsa-project/main'
+binary-path:     '/Applications/GitHub/final-dsa-project/Trie'
 relocations:
   - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _n, symObjAddr: 0x2F660, symBinAddr: 0x10000C000, symSize: 0x0 }
   - { offsetInCU: 0x5B, offset: 0x5B, size: 0x8, addend: 0x0, symName: _trie, symObjAddr: 0x2F668, symBinAddr: 0x10000C008, symSize: 0x0 }

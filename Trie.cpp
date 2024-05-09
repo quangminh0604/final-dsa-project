@@ -39,12 +39,12 @@ const int dy[] = {0, 1, 0, -1, 1, -1, -1, 1};
  
 //mt19937 rd(time(0));
  
-#define ALPHABET 53
+#define ALPHABET 53 // number of differnces of characters 
 struct Node {
-    int next[ALPHABET];
-    int number_of_word;
+    int next[ALPHABET]; // array next
+    int number_of_word; // the quantity of word which are stop in this node 
     Node() {
-        REP(i, ALPHABET) next[i] = -1;
+        REP(i, ALPHABET) next[i] = -1; // everynode point to null
         number_of_word = 0;
     }
 };
@@ -66,27 +66,26 @@ void add(string st) {
     int u = 0; 
     for (auto c : st) {
         int x = converting(c); // convert char to int
-        if (trie[u].next[x] == -1) {
+        if (trie[u].next[x] == -1) { // if the prefix does not exist, create new branch
             trie[u].next[x] = sz(trie);
             trie.push_back(Node());
         }
-        u = trie[u].next[x];
+        u = trie[u].next[x]; // go to next node 
     }
-    trie[u].number_of_word++; 
+    trie[u].number_of_word++; // increase count variant
 }
 
 // remove function
-void erase(string st) {
+bool erase(string st) {
     int u = 0;
     for (auto c : st) {
         int x = converting(c); // convert char to int
-        if (trie[u].next[x] == -1) {
-            trie[u].next[x] = sz(trie);
-            trie.push_back(Node());
-        }
-        u = trie[u].next[x];
+        if (trie[u].next[x] == -1) return false; // if the prefix does not exist, return false
+        u = trie[u].next[x]; // go to next node 
     }
-    trie[u].number_of_word--;
+    if (trie[u].number_of_word == 0) return false; // if the string does not exist, return false
+    trie[u].number_of_word--;  
+    return true;
 }
 
 // check whether a existence of string in the set 
@@ -94,30 +93,31 @@ bool check(string st) {
     int u = 0;
     for (auto c : st) {
         int x = converting(c); // convert char to int
-        if (trie[u].next[x] == -1) return false;
-        u = trie[u].next[x];
+        if (trie[u].next[x] == -1) return false; // return false if next node is empty
+        u = trie[u].next[x]; // go to next node
     }
     return trie[u].number_of_word > 0;
 }
 
 void solve() {
     cin >> n;
-    string tmp; getline(cin, tmp);
-    trie.push_back(Node());
+    string tmp; getline(cin, tmp); // preparing line in order to getline work normally
+    trie.push_back(Node()); // create root of tree 
     FOR(i, 1, n) {
-        string st; getline(cin, st); // input string with all capital letters
-        add(st);
+        string st; getline(cin, st); // input string with all capital, uncapital and blank characters
+        add(st); 
     }
     
     int n; cin >> n; 
-    string st; getline(cin, st); 
+    string st; getline(cin, st); // for normal running like line 104
     FOR(i, 1, n) {
         getline(cin, st);
-        if (check(st)) cout << st << " is in set\n";
-        else cout << st << " is not in set\n";
+        if (check(st)) cout << st << " is in set\n"; // check return true when it finds st in the set and false when can not
+        else cout << st << " is not in set\n"; 
     }
 }
- 
+
+// main goes right here 
 int main() {
         ios_base::sync_with_stdio(false);
         cin.tie(0);
