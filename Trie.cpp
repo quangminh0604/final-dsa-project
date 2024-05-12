@@ -76,16 +76,13 @@ void add(string st) {
 }
 
 // remove function
-bool erase(string st) {
+void erase(string st) {
     int u = 0;
     for (auto c : st) {
         int x = converting(c); // convert char to int
-        if (trie[u].next[x] == -1) return false; // if the prefix does not exist, return false
         u = trie[u].next[x]; // go to next node 
     }
-    if (trie[u].number_of_word == 0) return false; // if the string does not exist, return false
-    trie[u].number_of_word--;  
-    return true;
+    trie[u].number_of_word--;  // increase counting of word
 }
 
 // check whether a existence of string in the set 
@@ -111,9 +108,25 @@ void solve() {
     int n; cin >> n; 
     string st; getline(cin, st); // for normal running like line 104
     FOR(i, 1, n) {
+        string T; cin >> T; 
         getline(cin, st);
-        if (check(st)) cout << st << " is in set\n"; // check return true when it finds st in the set and false when can not
-        else cout << st << " is not in set\n"; 
+
+        reverse(ALL(st));
+        st.pop_back();
+        reverse(ALL(st));
+
+        //cout << T << " " << st << "\n";
+        if (T == "check") {
+            if (check(st)) cout << st << " is in set\n"; // check return true when it finds st in the set and false when can not
+            else cout << st << " is not in set\n"; 
+        } 
+        if (T == "delete") {
+            // cout << st << " ";
+            if (check(st)) {
+                erase(st);
+                cout << st << " is erased completely!\n";
+            } else cout << "error delete!\n";
+        }
     }
 }
 
