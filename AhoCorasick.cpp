@@ -43,12 +43,12 @@ struct Node {
     int next[ALPHABET];
     int fail; // kmp at this node
     int len; // depth level
-    bool end_of_word;
+    vector<int> matches; // list nodes' id
     Node() {
         REP(i, ALPHABET) next[i] = -1; // point to null
         fail = 0; // all kmp = 0
         len = 0; // still dont have level yet
-        end_of_word = false;
+        matches.clear();
     }
 };
  
@@ -58,7 +58,7 @@ int n;
 vector<Node> trie;
 
 // add st to the set like normal
-void add(string st) {
+void add(string st, int id) {
     int u = 0;
     for (auto c : st) {
         int x = c - 'a'; // convert char to int
@@ -69,7 +69,7 @@ void add(string st) {
         trie[trie[u].next[x]].len = trie[u].len + 1; // calculate the level of next node
         u = trie[u].next[x];
     }
-    trie[u].end_of_word = true;
+    trie[u].matches.push_back(id); // add id to node 
 }
 
 // AhoCorasick requires to BFS
@@ -107,7 +107,7 @@ string query(string st) {
     REP(i, sz(st)) {
         int x = st[i] - 'a'; //  convert char to int
         u = trie[u].next[x];
-        if (trie[u].end_of_word && trie[u].len > ans.se - ans.fi + 1) 
+        if (!trie[u].matches.empty() && trie[u].len > ans.se - ans.fi + 1) 
             ans = mp(i - trie[u].len + 1, i); 
     }
     if (ans == mp(0, -1)) res = "no existence!!";
@@ -120,7 +120,7 @@ void solve() {
     trie.push_back(Node());
     FOR(i, 1, n) {
         string st; cin >> st;
-        add(st);
+        add(st, i);
     }
     cout << sz(trie) << "\n";
     AC_BFS();

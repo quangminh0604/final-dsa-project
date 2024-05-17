@@ -82,7 +82,7 @@ void erase(string st) {
         int x = converting(c); // convert char to int
         u = trie[u].next[x]; // go to next node 
     }
-    trie[u].number_of_word--;  // increase counting of word
+    trie[u].number_of_word--;  // decrease counting of word
 }
 
 // check whether a existence of string in the set 
@@ -115,13 +115,11 @@ void solve() {
         st.pop_back();
         reverse(ALL(st));
 
-        //cout << T << " " << st << "\n";
         if (T == "check") {
             if (check(st)) cout << st << " is in set\n"; // check return true when it finds st in the set and false when can not
             else cout << st << " is not in set\n"; 
         } 
         if (T == "delete") {
-            // cout << st << " ";
             if (check(st)) {
                 erase(st);
                 cout << st << " is erased completely!\n";
