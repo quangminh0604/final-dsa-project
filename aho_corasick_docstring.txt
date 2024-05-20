@@ -1,0 +1,42 @@
+	"""
+	struct Node: quản lý 1 node trong cây trie
+	mảng next có công dụng nhảy đến nút khớp xâu dài nhất vừa là hậu tố và tiền tố
+	biến fail: là biến khớp kmp 
+	"""
+
+	"""
+	Hàm add: gồm 2 biến là st - xâu ký tự được thêm vào, và id là định dạng của xâu -> thêm xâu st vào cây trie 
+	Duyệt từng ký tự từ trái qua phải: 
+		"""
+		chuyển đổi ký tự sang số nguyên 
+		nếu nhánh với ký tự chưa tồn tại -> tạo ra nút mới trên cây
+		chuyển đến nút tiếp theo 
+		"""
+		tính độ sâu của nút
+	thêm id vào vector matches trên nút cuối cùng trong quá trình duyệt
+	"""
+
+	"""
+	Hàm AC_BFS: Là hàm bfs để kết nối các node lại với nhau, gọi là suffix link
+	cho các nút ở tầng 1 vào trong queue
+	duyệt queue: 
+		duyệt tất cả ký tự khác nhau:
+			nếu tồn tại nút kế tiếp tương ứng ký tự đó -> cho vào queue, đồng thời xử lý nút fail
+			ngược lại -> tính giá trị của nút đó bằng giá trị fail
+	"""
+
+	"""
+	Hàm query: Tìm xâu con dài nhất tồn tại trong 1 xâu cho trước, sao cho xâu con đó là 1 phần tử trong tập hợp xâu 
+	Duyệt từng ký tự từ trái sang phải: 
+		cứ nhảy đến nút kế tiếp trên cây trie đã bfs
+		khi gặp 1 nút có tồn tại id -> tính toán để tối ưu kết quả đầu ra
+		ngược lại không làm gì cả
+	In ra xâu con dài nhất đó hoặc in ra "không tồn tại"
+	"""
+
+	"""
+	Hàm main: 
+	Khởi tạo gốc cây trie: 
+	Nhập dữ liệu và dựng cây trie: 
+	Gọi hàm bfs:
+	Thực hiện từng truy vấn:

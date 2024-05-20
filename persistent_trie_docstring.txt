@@ -1,0 +1,40 @@
+	"""
+	struct Node: Nút trên cây trie
+	"""
+	
+	"""
+	Hàm add: thêm một phiên bản mới cho cây trie
+	Hàm mang theo 3 biến:
+		oldID -> gốc cây của phiên bản gần nhất
+		newID -> gốc cây mới được tạo 
+		st -> xâu được vào trong phiên bản mới 
+	Duyệt st từ trái sang phải:
+		Duyệt tất cả các ký tự khác nhau khác ký tự đang xét -> trỏ con trỏ của nút newID theo con trỏ của nút oldID(nếu tồn tại)
+		Tạo thêm nút mới cho ký tự đang xét trong newID
+		Trỏ newID đến nút mới tạo 
+		Trỏ oldID đến nút tiếp thep tương ứng với ký tự đang xét, nếu phiên bản cũ có tồn tại nút đó, trong trường hợp ngược lại, ta xem như oldID không tồn tại nữa
+	Đánh dấu tồn tại xâu tại vị trí cuối của phiên bản này
+	"""
+
+	"""
+	Hàm check: kiểm tra xem có tồn tại 1 xâu ký trong 1 số phiên bản 
+	Hàm mang theo 2 biến:
+		moment: thời điểm được xét 
+		st: xâu ký tự cần kiểm tra 
+	Duyệt st từ trái sang phải: 
+		Đi đến nút tiếp theo theo gốc cây trie ở thời điểm moment 
+		Nếu không tồn tại -> return false
+	Nếu nút cuối cùng đến trie không phải là kết thúc của 1 xâu -> return false
+	Ngược lại -> return true
+	"""
+
+	"""
+	Hàm main: 
+	Khởi tạo gốc cho tất cả các phiên bản
+	Nhập dữ liệu:
+	Thực hiện từng truy vấn
+	"""	
+
+
+
+	

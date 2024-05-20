@@ -1,0 +1,35 @@
+	"""
+	Struct Node: biểu diễn 1 nút trên cây 
+	"""
+    
+	"""
+	Hàm converting: để mã hoá ký tự dạng char sang số nguyên dương 
+	"""
+    
+	"""
+	hàm add: thêm xâu mới vào cây trie 
+	Duyệt từng ký tự từ trái sang
+		"""
+		chuyển đổi ký tự sang số nguyên 
+		nếu nhánh với ký tự chưa tồn tại -> tạo ra nút mới trên cây
+		chuyển đến nút tiếp theo 
+		"""
+    	Cộng biến đếm số lượng xâu ký tự lên 1 đơn vị ở nút cuối trong quá trình duyệt xâu
+    	"""
+    
+    	"""
+    	hàm erase: xoá sự hiện diện của 1 xâu trong trie 
+    	Duyệt từng ký tự từ trái sang phải 
+		"""
+    		chuyển đổi ký tự sang số nguyên 
+		đi đến nút tiếp theo tương ứng với ký tự
+		"""
+	Giảm biến đếm số lượng xâu ký tự xuống 1 đơn vị ở nút cuối trong quá trình duyệt xâu
+        """
+	
+        """
+        hàm main: 
+	khởi tạo gốc cây trie: 
+	nhập dữ liệu: 
+	thực hiện từng truy vấn: 
+	"""
